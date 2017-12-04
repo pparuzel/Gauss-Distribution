@@ -7,12 +7,14 @@
 //
 
 #include <iostream>
-#include <cmath>
+#include <fstream>
+#include <string>
 #include <iomanip>
+#include <cmath>
 #include "Randomizer.hpp"
 
-//Randomizer r{};     // global randomizer
-Randomizer r{1995}; // fixed global randomizer
+Randomizer r{};         // global randomizer
+//Randomizer r{1995};   // fixed global randomizer
 
 double gdist()
 {
@@ -39,20 +41,33 @@ double gdist()
 
 int main()
 {
-    constexpr int SIZE  = 20;
-    constexpr int ITERS = 10000;
-    int hist[SIZE+1];
-    for (int i{0}; i<SIZE+1; ++i)
+    std::string path = __FILE__;
+    path.replace(path.end()-8, path.end(), "Resources/histogram.dat");
+    std::ofstream file{path, std::ofstream::out};
+
+    constexpr int SIZE  = 21;
+    constexpr int ITERS = 1000000;
+    int hist[SIZE];
+    for (int i{0}; i<SIZE; ++i)
     {
         hist[i] = 0;
     }
+    constexpr int HALF_SIZE = SIZE/2;
     for (int i{0}; i<ITERS; ++i)
     {
         double val = gdist();
-        int index = std::round(val*(SIZE/2));
-//        std::cout << "approx: " << (val*SIZE/2) << " goes to " << index+SIZE/2 << std::endl;
-        ++hist[index+SIZE/2];
+        int index = std::round(val*(HALF_SIZE));
+        ++hist[index+HALF_SIZE];
     }
+    int ii = 0;
+    for (int i{-SIZE/2}; i<=SIZE/2; ++i)
+    {
+        file << std::fixed << std::setprecision(4);
+        file << static_cast<double>(i)/SIZE*2 << "\t" << hist[ii] << std::endl;
+        ++ii;
+    }
+    file.close();
+
     for (int i{-SIZE/2}; i<SIZE/2+1; ++i)
     {
         if (i >= 0) { std::cout << " "; }
