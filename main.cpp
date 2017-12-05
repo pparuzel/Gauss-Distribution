@@ -31,10 +31,7 @@ double gdist()
             // accept
             x = x_;
         }
-        else
-        {
-            // reject
-        }
+        // else reject
     }
     return x;
 }
@@ -63,7 +60,7 @@ int main()
     for (int i{-SIZE/2}; i<=SIZE/2; ++i)
     {
         file << std::fixed << std::setprecision(4);
-        file << static_cast<double>(i)/SIZE*2 << "\t" << hist[ii] << std::endl;
+        file << static_cast<double>(i)/SIZE*2 << "\t" << hist[ii] << "\n";
         ++ii;
     }
     file.close();
@@ -72,6 +69,6 @@ int main()
     {
         if (i >= 0) { std::cout << " "; }
         int hash_num = hist[i+SIZE/2]/(1+2*(int)(ITERS/1000));
-        std::cout << " " << i << ". \t" << std::string(hash_num, '#') << std::endl;
+        std::cout << " " << i << ". \t" << std::string(hash_num, '#') << "\n";
     }
 }

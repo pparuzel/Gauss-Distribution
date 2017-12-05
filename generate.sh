@@ -9,6 +9,7 @@
 mkdir -p build
 rm -f "Resources/graph.png"
 g++ -std=c++14 main.cpp -o "build/main.x"
+./build/main.x
 gnuplot plothist.gnu
 rm -Rf build
 open "Resources/graph.png"
