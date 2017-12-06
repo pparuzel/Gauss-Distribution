@@ -11,12 +11,15 @@ plotly()
 
 gen = MersenneTwister(19937)
 
+x = 0
+
 function gdist()
-    x = rand(gen) * 8 - 4
+    global x
+    δ = 0.2
     for i in 1:100
-        x_ = rand(gen) * 8 - 4
-        P = min(exp(x * x - x_ * x_), 1.)
-        if (rand(gen) < P)
+        x_ = x + δ * (2 * rand(gen) - 1)
+        d = x*x - x_*x_;
+        if (d > 0 || rand(gen) < exp(d))
             x = x_
         end
     end
