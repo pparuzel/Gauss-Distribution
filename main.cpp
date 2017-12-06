@@ -18,7 +18,7 @@ Randomizer r{};         // global randomizer
 
 double gdist()
 {
-    double min=-1., max=1.;
+    double min=-4., max=4.;
     double x = r.range(min, max);
     double x_;
     double P;
@@ -36,39 +36,23 @@ double gdist()
     return x;
 }
 
-int main()
+int main(int argc, char* argv[])
 {
     std::string path = __FILE__;
-    path.replace(path.end()-8, path.end(), "Resources/histogram.dat");
+    if (argc > 1)
+    {
+        path.replace(path.end()-8, path.end(), argv[1]);
+    }
+    else
+    {
+        path.replace(path.end()-8, path.end(), "Resources/histogram.dat");
+    }
     std::ofstream file{path, std::ofstream::out};
 
-    constexpr int SIZE  = 21;
-    constexpr int ITERS = 1000000;
-    int hist[SIZE];
-    for (int i{0}; i<SIZE; ++i)
-    {
-        hist[i] = 0;
-    }
-    constexpr int HALF_SIZE = SIZE/2;
+    constexpr int ITERS = 1e6;
     for (int i{0}; i<ITERS; ++i)
     {
-        double val = gdist();
-        int index = std::round(val*(HALF_SIZE));
-        ++hist[index+HALF_SIZE];
-    }
-    int ii = 0;
-    for (int i{-SIZE/2}; i<=SIZE/2; ++i)
-    {
-        file << std::fixed << std::setprecision(4);
-        file << static_cast<double>(i)/SIZE*2 << "\t" << hist[ii] << "\n";
-        ++ii;
+        file << gdist() << "\n";
     }
     file.close();
-
-    for (int i{-SIZE/2}; i<SIZE/2+1; ++i)
-    {
-        if (i >= 0) { std::cout << " "; }
-        int hash_num = hist[i+SIZE/2]/(1+2*(int)(ITERS/1000));
-        std::cout << " " << i << ". \t" << std::string(hash_num, '#') << "\n";
-    }
 }
