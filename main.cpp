@@ -18,15 +18,15 @@ Randomizer r{};         // global randomizer
 
 double gdist()
 {
-    double min=-4., max=4.;
-    double x = r.range(min, max);
+    double min=-1., max=1.;
+    double delta = 0.2;
+    static double x = 0;
     double x_;
-    double P;
     for (int i{0}; i<100; ++i)
     {
-        x_ = r.range(min, max);
-        P = std::min(exp(x*x-x_*x_), 1.);
-        if (r.range(0., 1.) < P)
+        x_ = x + delta * r.range(min, max);
+        auto d = x*x - x_*x_;
+        if (d > 0 || r.range(0., 1.) < exp(d))
         {
             // accept
             x = x_;
@@ -45,7 +45,8 @@ int main(int argc, char* argv[])
     }
     else
     {
-        path.replace(path.end()-8, path.end(), "Resources/histogram.dat");
+        std::cerr << "No arguments passed!" << std::endl;
+        return 1;
     }
     std::ofstream file{path, std::ofstream::out};
 

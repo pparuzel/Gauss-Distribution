@@ -1,6 +1,6 @@
 #!/usr/bin/env julia
 
-#  plotter.jl
+#  gauss.jl
 #  GaussDistrib
 #
 #  Created by Pawel Paruzel on 06/12/2017.
