@@ -8,4 +8,4 @@
 
 mkdir -p build
 g++ -std=c++14 main.cpp -o "build/main.x"
-./build/main.x "Resources/cxx_hist.dat"
+./build/main.x "res/cxx_hist.dat"
