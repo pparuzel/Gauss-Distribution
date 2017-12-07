@@ -1,4 +1,4 @@
-# Gauss-Distribution
+# Gaussian Distribution
 **C++** and **Julia** Normal distribution generated with uniform distribution
 
 ###### Plot generated with Julia Plotly  
